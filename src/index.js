@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './assets/css/theme.min.css';
+import Home from './components/layout/fashion/main';
+import Allpost from './components/Allpost';
+import News from './components/News';
+import AddNew from './components/AddNew';
+import Postview from './components/Postview';
+import NotFound from './components/pages/notfound';
+import Layout from './components/app'
+import { history } from './components/services/history';
+class Root extends Component {
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  render() {
+    return (
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+      <Router>
+        <Layout>
+          <Routes history={history}>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/all-post" element={<Allpost />} />
+            <Route exact path="/news" element={<News />} />
+            <Route exact path="/add-new" element={<AddNew />} />
+            <Route exact path={`/view/:id`} element={<Postview />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Layout>
+      </Router>
+    )
+  }
+}
+
+ReactDOM.render(<Root />, document.getElementById("root"));
