@@ -1,13 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Container from '@material-ui/core/Container';
 import Grid from "@material-ui/core/Grid";
 
 
-import { Button, Paper } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 class TextFields extends React.Component {
     constructor(props) {

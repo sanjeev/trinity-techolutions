@@ -8,7 +8,7 @@ import { dataService } from '../../services/data.service';
 import Card from "@material-ui/core/Card";
 
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
+
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 export default class Homeslider extends Component {
