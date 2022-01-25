@@ -6,6 +6,8 @@ import './assets/css/theme.min.css';
 import Home from './components/layout/fashion/main';
 import Allpost from './components/Allpost';
 import News from './components/News';
+import Newsedit from './components/Newsedit';
+
 import AddNew from './components/AddNew';
 import Postview from './components/Postview';
 import NotFound from './components/pages/notfound';
@@ -24,6 +26,7 @@ class Root extends Component {
             <Route exact path="/news" element={<News />} />
             <Route exact path="/add-new" element={<AddNew />} />
             <Route exact path={`/view/:id`} element={<Postview />} />
+            <Route exact path={`/edit/:id`} element={<Newsedit />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
