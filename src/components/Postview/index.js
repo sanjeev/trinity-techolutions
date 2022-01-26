@@ -42,6 +42,10 @@ export default function BlogPost() {
                 <Typography align="center" gutterBottom variant="h5" component="h1">
                     View Post
                 </Typography>
+
+                <Typography align="center" gutterBottom variant="h2" component="h2">
+                   {single.title}
+                </Typography>
                 <Grid sx={{ flexGrow: 1 }} container spacing={2}>
                     <Grid item xs={3} >
 
@@ -50,7 +54,7 @@ export default function BlogPost() {
                         <Card>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    {single.title}
+                                    
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">
                                     {single.content}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, {useEffect } from 'react';
 import Global from '../helpers/global';
 import { useParams } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -11,8 +11,12 @@ import { Button } from "@material-ui/core";
 
 export default function TextFields() {
     const { id } = useParams();
+    const [state, setState] = React.useState({
+        title: "",
+        content: "",
+        createdAt: new Date().getTime(),
+      })
     
-    const [single, setSingle] = useState([]);
     useEffect(() => {
 
         const url = Global.BASE_API_PATH + `post/${id}`;
@@ -21,7 +25,10 @@ export default function TextFields() {
             try {
                 const response = await fetch(url);
                 const json = await response.json();
-                setSingle(json.post);
+                console.log(json.post.title);
+                console.log(json.post.content);
+                setState({ title: json.post.title, content: json.post.content });
+              
 
             } catch (error) {
                 console.log("error", error);
@@ -30,7 +37,40 @@ export default function TextFields() {
 
         fetchData();
     }, []);
-    
+    function handleCheckboxClick(event) {
+        const { name, value } = event.target;
+        
+        setState({
+            ...state,
+            [name]: value
+          });
+    }
+    function handleSubmit(event){
+        event.preventDefault();
+       
+        var raw = JSON.stringify({
+            "title": state.title,
+            "content": state.content,
+            "createdAt": state.createdAt
+        });
+        const requestOptions = {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: raw
+        };
+        console.log(state);
+       console.log(requestOptions);
+        const url = Global.BASE_API_PATH + `post/${id}`;
+        fetch(url, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+                //return this.props.history.push('/');
+                //return this.props.history.push({  pathname: '/', state: savedata});
+                window.location.replace(`/view/${id}`);
+            })
+            .catch(error => console.log('error', error));
+    }
     return (
         <section className="py10">
             <Container>
@@ -42,17 +82,18 @@ export default function TextFields() {
 
                     </Grid>
                     <Grid item xs={6} >
-                        <form >
+                        <form  onSubmit={handleSubmit}>
 
                             <TextField
                                 fullWidth
-                                label={"Text Title"}
-                                name="name"
+                                multiline
                                 variant="outlined"
-                                
-                               
-                                style={{ marginBottom: '27px' }}
+                                name="title"
+                                InputLabelProps={{ shrink: true }}
+                                defaultValue={state.title}
+                                label={"Text Title"} //optional
                                 required
+                                onChange={ handleCheckboxClick }
                             />
                             <TextField
                                 fullWidth
@@ -60,7 +101,9 @@ export default function TextFields() {
                                 rows={5}
                                 variant="outlined"
                                 name="content"
-                                
+                                InputLabelProps={{ shrink: true }}
+                                onChange={ handleCheckboxClick }
+                                defaultValue={state.content}
                                 label={"Text Content"} //optional
                                 required
                             />
